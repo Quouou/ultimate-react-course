@@ -111,7 +111,13 @@ const data = [
     title: "A Game of Thrones",
     publicationDate: "1996-08-01",
     author: "George R. R. Martin",
-    genres: ["fantasy", "high-fantasy", "novel", "fantasy fiction"],
+    genres: [
+      "fantasy",
+      "high-fantasy",
+      "novel",
+      "fantasy fiction",
+      "adventure",
+    ],
     hasMovieAdaptation: true,
     pages: 835,
     translations: {
@@ -142,3 +148,130 @@ function getBooks() {
 function getBook(id) {
   return data.find((d) => d.id === id);
 }
+
+// const book = getBook(1);
+
+// const { title, author, pages, publicationDate, genres, hasMovieAdaptation } =
+//   book;
+
+// console.log(title, author, genres);
+
+// const [primaryGenre, secondaryGenre, ...otherGenres] = genres;
+
+// console.log(primaryGenre, secondaryGenre, otherGenres);
+
+// const newGenre = [...genres, "new genre"];
+// console.log(newGenre);
+
+// const updatedBook = {
+//   ...book,
+//   //Adding a new property
+//   moviePublicationDate: "2021-10-22",
+//   //Overwriting an existing property
+// };
+// updatedBook;
+
+// const getYear = (str) => str.split("-")[0];
+
+// console.log(getYear(publicationDate));
+
+// //Template Literals
+
+// const summary = `${title}, a ${pages}-page long book, is written by ${author} and published in ${getYear(
+//   publicationDate
+// )}. the book has ${
+//   hasMovieAdaptation ? "a movie adaptation" : "no movie adaptation"
+// }`;
+// summary;
+
+// const pagesRange = pages > 1000 ? "over 1000" : "less than 1000";
+// console.log(`The book has ${pagesRange} page`);
+
+// console.log(hasMovieAdaptation && "The book has a movie adaptation");
+
+// // falsy 0, '', null, undefined
+// console.log("joba" && "jobo");
+
+// function getTotalReviewCount(book) {
+//   const goodReads = book.reviews.goodreads.reviewsCount;
+
+//   //Optional Chaining
+//   const librarything = book.reviews.librarything?.reviewsCount ?? 0;
+//   return goodReads + librarything;
+// }
+
+// console.log(getTotalReviewCount(book));
+
+const books = getBooks();
+/*
+function getTotalReviewCount(book) {
+  const goodReads = book.reviews.goodreads.reviewsCount;
+
+  //Optional Chaining
+  const librarything = book.reviews.librarything?.reviewsCount ?? 0;
+  return goodReads + librarything;
+}
+
+const titles = books.map((book) => book.title);
+console.log(titles);
+
+//Map
+const essentialData = books.map((book) => {
+  return {
+    title: book.title,
+    author: book.author,
+    reviewsCount: getTotalReviewCount(book),
+  };
+});
+console.log(essentialData);
+//Filter
+
+const filteredBooks = books
+  .filter((book) => book.pages > 500)
+  .filter((book) => book.hasMovieAdaptation);
+console.log(filteredBooks);
+
+const adventureBooks = books
+  .filter((books) => books.genres.includes("adventure"))
+  .map((book) => book.title);
+console.log(adventureBooks);
+
+//Reduce
+const allBookPages = books.reduce((acc, book) => acc + book.pages, 0);
+console.log(allBookPages);
+
+//Sort
+
+const arr = [3, 7, 5, 1, 9];
+const sorted = arr.slice().sort((a, b) => b - a);
+console.log(sorted);
+arr;
+
+const sortedByPages = books.slice().sort((a, b) => a.pages - b.pages);
+console.log(sortedByPages);
+
+// Immutable Arrays
+
+const newBook = {
+  id: 6,
+  title: "The Hobbit",
+  author: "J. R. R. Tolkien",
+};
+//Adding book object to array
+const booksAfterAdd = [...books, newBook];
+console.log(booksAfterAdd);
+
+// Delete book object from array
+const bookAfterDelete = booksAfterAdd.filter((book) => book.id !== 2);
+console.log(bookAfterDelete);
+
+// Update book object in array
+const booksAfterUpdate = bookAfterDelete.map((book) =>
+  book.id === 1 ? { ...book, pages: 1500 } : book
+);
+console.log(booksAfterUpdate);
+*/
+
+fetch("https://jsonplaceholder.typicode.com/todos/")
+  .then((response) => response.json())
+  .then((json) => console.log(json));
