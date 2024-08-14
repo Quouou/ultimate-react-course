@@ -67,37 +67,38 @@ function Header() {
 
 function Menu() {
   const numberOfPizzas = pizzaData.length;
-
   return (
     <main className="menu">
       <h2>Our Menu</h2>
       {numberOfPizzas > 0 ? (
-        <ul className="pizzas">
-          {pizzaData.map((pizza) => (
-            <Pizza
-              key={pizza.name}
-              name={pizza.name}
-              ingredient={pizza.ingredients}
-              photoName={pizza.photoName}
-              price={pizza.price}
-              soldOut={pizza.soldOut}
-            />
-          ))}
-        </ul>
+        <>
+          <p>Authentic Italian Cuisines. Bla Bla Bla Bla Bla Bla</p>;
+          <ul className="pizzas">
+            {pizzaData.map((pizza) => (
+              <Pizza
+                key={pizza.name}
+                name={pizza.name}
+                ingredient={pizza.ingredients}
+                photoName={pizza.photoName}
+                price={pizza.price}
+                soldOut={pizza.soldOut}
+              />
+            ))}
+          </ul>
+        </>
       ) : null}
     </main>
   );
 }
 
-function Pizza(props) {
-  if (props.soldOut) return null;
+function Pizza({ name, ingredient, photoName, price, soldOut }) {
   return (
-    <li className="pizza">
-      <img src={props.photoName} alt={props.name} />
+    <li className={`pizza ${soldOut ? "sold-out" : ""}`}>
+      <img src={photoName} alt={name} />
       <div>
-        <h1>{props.name}</h1>
-        <p>{props.ingredient}</p>
-        <span>{props.price}</span>
+        <h1>{name}</h1>
+        <p>{ingredient}</p>
+        <span>{soldOut ? "Sold Out" : price}</span>
       </div>
     </li>
   );
@@ -106,7 +107,7 @@ function Pizza(props) {
 function Footer() {
   const [time, setTime] = useState(new Date().toLocaleTimeString());
   const hour = new Date().getHours();
-  const openHour = 10;
+  const openHour = 8;
   const closeHour = 22;
   const isOpen = hour >= openHour && hour < closeHour;
 
