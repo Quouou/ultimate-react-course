@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ReactDom from "react-dom/client";
 import "./index.css";
 
@@ -22,7 +22,7 @@ const pizzaData = [
     ingredients: "Tomato, mozarella, spinach, and ricotta cheese",
     price: 12,
     photoName: "pizzas/spinaci.jpg",
-    soldOut: false,
+    soldOut: true,
   },
   {
     name: "Pizza Funghi",
@@ -66,36 +66,74 @@ function Header() {
 }
 
 function Menu() {
+  const numberOfPizzas = pizzaData.length;
+
   return (
     <main className="menu">
       <h2>Our Menu</h2>
-      <Pizza />
+      {numberOfPizzas > 0 ? (
+        <ul className="pizzas">
+          {pizzaData.map((pizza) => (
+            <Pizza
+              key={pizza.name}
+              name={pizza.name}
+              ingredient={pizza.ingredients}
+              photoName={pizza.photoName}
+              price={pizza.price}
+              soldOut={pizza.soldOut}
+            />
+          ))}
+        </ul>
+      ) : null}
     </main>
   );
 }
 
-function Footer() {
-  const hour = new Date().getHours();
-  const openHour = 8;
-  const closeHour = 22;
-  const isOpen = hour >= openHour && hour < closeHour;
-  console.log(isOpen ? "We are currently open" : "We are currently closed");
-  // if (hour >= openHour && hour < closeHour) alert("We are currently open");
-  // else alert("We are currently closed");
+function Pizza(props) {
+  if (props.soldOut) return null;
   return (
-    <footer className="footer">
-      <footer> We are currently open</footer>
-      <p>&copy; 2021 Fast Pizzaria Co.</p>
-    </footer>
+    <li className="pizza">
+      <img src={props.photoName} alt={props.name} />
+      <div>
+        <h1>{props.name}</h1>
+        <p>{props.ingredient}</p>
+        <span>{props.price}</span>
+      </div>
+    </li>
   );
 }
-function Pizza() {
+
+function Footer() {
+  const [time, setTime] = useState(new Date().toLocaleTimeString());
+  const hour = new Date().getHours();
+  const openHour = 10;
+  const closeHour = 22;
+  const isOpen = hour >= openHour && hour < closeHour;
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTime(new Date().toLocaleTimeString());
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
   return (
-    <div>
-      <img src="pizzas/spinaci.jpg" alt="Pizza Spinaci" />
-      <h1>Pizza Spinaci</h1>
-      <p>Tomato, mozarella, spinach, and ricotta cheese</p>
-    </div>
+    <footer className="footer">
+      <div className="order">
+        {isOpen ? (
+          <div className="order">
+            <p>
+              {time} We are currently {isOpen ? "open" : "close"}
+            </p>
+            <button className="btn">Order</button>
+          </div>
+        ) : (
+          <p>
+            {time} We are currently close. We will open at {openHour} AM
+          </p>
+        )}
+        <p>&copy; 2021 Fast Pizzaria Co.</p>
+      </div>
+    </footer>
   );
 }
 
