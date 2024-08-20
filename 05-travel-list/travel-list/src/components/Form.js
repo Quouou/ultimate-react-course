@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export default function Form() {
+export default function Form({ onAdditems }) {
   const [desc, setDesc] = useState("");
   const [value, setValue] = useState(1);
 
@@ -9,9 +9,13 @@ export default function Form() {
 
     if (!desc) return;
 
-    const newItem = { desc, value, packed: false, id: Date.now() };
-    console.log(newItem);
-
+    const newItem = {
+      description: desc,
+      quantity: value,
+      packed: false,
+      id: Date.now(),
+    };
+    onAdditems(newItem);
     setDesc("");
     setValue(1);
   }
